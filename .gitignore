@@ -1,5 +1,4 @@
-dist/
-cache/
-node_modules/
-.env
-.assets
+.DS_Store
+dist
+node_modules
+out

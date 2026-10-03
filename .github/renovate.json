@@ -1,0 +1,31 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": ["config:recommended"],
+    "packageRules": [
+        {
+            "matchUpdateTypes": ["patch"],
+            "automerge": true,
+            "minimumReleaseAge": "7 days"
+        },
+        {
+            "matchPackageNames": ["typescript"],
+            "allowedVersions": "<7"
+        },
+        {
+            "description": "pinned to 7.0.0 on purpose, upgrade manually",
+            "matchPackageNames": ["electron"],
+            "enabled": false
+        },
+        {
+            "description": "shipped inside electron 7, so must keep working on node 12.8 and chromium 78",
+            "matchPackageNames": [
+                "discord-rpc",
+                "electron-log",
+                "electron-store",
+                "electron-updater",
+                "electron-localshortcut"
+            ],
+            "dependencyDashboardApproval": true
+        }
+    ]
+}
