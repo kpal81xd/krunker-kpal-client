@@ -74,7 +74,7 @@ Krunker's current site uses JavaScript syntax that Chromium 78 cannot parse, so 
 ## Security
 
 - Every window runs with context isolation, without Node integration and without the `remote` module. Krunker's page cannot reach client code, and the client talks to it only through shared DOM attributes.
-- Navigation is limited to `krunker.io`. Other `http(s)` links open in the system browser, and Discord join requests are only accepted for krunker game links.
+- Navigation is limited to `https://krunker.io`. Other `http(s)` links open in the system browser, and Discord join requests are only accepted for `https` krunker game links.
 - Settings sent over IPC are checked against the known keys and types before they are saved.
 - Web security is turned off in the game window only while custom models or the KPal theme are enabled, because Chromium blocks the `https` to `file://` redirects those features rely on.
 

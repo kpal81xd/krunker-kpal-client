@@ -6,10 +6,10 @@ export const tryCatch = <T>(fn: () => T) => {
     }
 };
 
-/** classifies a url as a krunker page, or undefined for anything off krunker.io */
+/** classifies a url as a krunker page, or undefined for anything off https krunker.io */
 export const pageType = (raw: string) => {
     const [err, url] = tryCatch(() => new URL(raw));
-    if (err || !['https:', 'http:'].includes(url.protocol)) {
+    if (err || url.protocol !== 'https:') {
         return;
     }
     if (url.hostname !== 'krunker.io' && !url.hostname.endsWith('.krunker.io')) {
