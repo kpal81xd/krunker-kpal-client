@@ -2,6 +2,12 @@
 
 <img src="./.github/logo.png" alt="logo" width="200"/>
 
+[![Release](https://img.shields.io/github/v/release/kpal81xd/krunker-kpal-client)](https://github.com/kpal81xd/krunker-kpal-client/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/kpal81xd/krunker-kpal-client/total)](https://github.com/kpal81xd/krunker-kpal-client/releases)
+[![CI](https://github.com/kpal81xd/krunker-kpal-client/actions/workflows/ci.yaml/badge.svg)](https://github.com/kpal81xd/krunker-kpal-client/actions/workflows/ci.yaml)
+[![License](https://img.shields.io/github/license/kpal81xd/krunker-kpal-client)](LICENSE)
+[![Discord](https://img.shields.io/badge/Discord-join-5865F2?logo=discord&logoColor=white)](https://discord.gg/uUvEAvG)
+
 Desktop client for [Krunker.io](https://krunker.io) with uncapped frame rate, matchmaking filters, custom models and Discord Rich Presence.
 
 ## Download
