@@ -1,0 +1,137 @@
+name: Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            type:
+                description: Release type
+                type: choice
+                options: [major, minor, patch, prerelease]
+                default: patch
+
+concurrency:
+    group: release
+    cancel-in-progress: false
+
+# only the release job can write; jobs that run dependency code stay read-only
+permissions:
+    contents: read
+
+jobs:
+    version:
+        name: Compute version
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.bump.outputs.version }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v7
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
+
+            - name: Compute next version
+              id: bump
+              env:
+                  RELEASE_TYPE: ${{ github.event.inputs.type }}
+              run: |
+                  tags=$(git tag --list 'v*' | sed 's/^v//')
+                  current=$(echo "$tags" | xargs -r npx --yes semver@7 | tail -n1)
+                  current=${current:-0.0.0}
+                  next=$(npx --yes semver@7 -i "$RELEASE_TYPE" "$current")
+                  echo "version=$next" >> "$GITHUB_OUTPUT"
+                  echo "Bump $RELEASE_TYPE: v$current -> v$next"
+
+    build:
+        name: Build (${{ matrix.name }})
+        needs: version
+        runs-on: ${{ matrix.os }}
+        timeout-minutes: 30
+        strategy:
+            matrix:
+                include:
+                    - name: windows
+                      os: windows-latest
+                      target: --win
+                    - name: mac
+                      os: macos-latest
+                      target: --mac --x64
+
+                      # electron 7 has no arm64 mac binary
+                      arch: x64
+                    - name: linux
+                      os: ubuntu-latest
+                      target: --linux
+        defaults:
+            run:
+                shell: bash
+        env:
+            npm_config_arch: ${{ matrix.arch }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v7
+              with:
+                  persist-credentials: false
+
+            - name: Set up Bun
+              uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version-file: package.json
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Set version
+              env:
+                  VERSION: ${{ needs.version.outputs.version }}
+              run: npm pkg set version="$VERSION"
+
+            - name: Build
+              run: bun run build
+
+            - name: Package
+              run: bunx electron-builder ${{ matrix.target }} --publish never
+              env:
+                  # builds are unsigned
+                  CSC_IDENTITY_AUTO_DISCOVERY: false
+
+            - name: Upload installers
+              uses: actions/upload-artifact@v7
+              with:
+                  name: release-${{ matrix.name }}
+                  if-no-files-found: error
+                  path: |
+                      dist/*.exe
+                      dist/*.dmg
+                      dist/*.zip
+                      dist/*.AppImage
+                      dist/*.blockmap
+                      dist/latest*.yml
+
+    release:
+        name: Publish release
+        needs: [version, build]
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Download installers
+              uses: actions/download-artifact@v8
+              with:
+                  pattern: release-*
+                  path: release
+                  merge-multiple: true
+
+            # latest*.yml files are what installed clients read to auto-update
+            - name: Create release
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  VERSION: v${{ needs.version.outputs.version }}
+                  PRERELEASE: ${{ github.event.inputs.type == 'prerelease' && '--prerelease' || '' }}
+              run: |
+                  gh release create "$VERSION" release/* \
+                    --repo "$GITHUB_REPOSITORY" \
+                    --target "$GITHUB_SHA" \
+                    --title "$VERSION" \
+                    --generate-notes \
+                    $PRERELEASE

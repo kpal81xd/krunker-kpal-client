@@ -11,7 +11,6 @@ bun run lint       # prettier, eslint and type checks
 bun run lint-fix   # apply prettier and eslint fixes
 bun run build      # bundle into out/
 bun run dist       # build installers into dist/
-bun run ship       # build and publish a GitHub release (needs GH_TOKEN)
 ```
 
 Electron is pinned to 7.0.0, which only ships x64 builds for macOS. On Apple Silicon, install [Rosetta](https://support.apple.com/en-us/102527) and run `npm_config_arch=x64 bun install` so the x64 Electron binary is downloaded.
@@ -46,4 +45,14 @@ Krunker's current site uses JavaScript syntax that Chromium 78 cannot parse, so 
 
 ## Releasing
 
-Releases are published to this repository's GitHub releases, which the auto-updater reads. Clients installed before the repository was renamed still check `krunker-kpal-client-RELEASE`, which GitHub redirects here. Never create a repository with that name, or those clients will stop updating.
+Run the **Release** workflow from the Actions tab and pick major, minor, patch or prerelease. It:
+
+1. Computes the next version from the latest `v*` tag.
+2. Builds the Windows installer, Mac dmg/zip and Linux AppImages (x64 and ia32) in parallel, each in a read-only job.
+3. Creates the GitHub release with generated notes and attaches the installers and `latest*.yml` files.
+
+Installed clients read the `latest*.yml` files to auto-update, so every release must come from this workflow. The version in `package.json` is set by the workflow and isn't bumped in the repo.
+
+Builds are unsigned. Windows icon and version info are set by `scripts/after-pack.mjs`, because electron-builder's own resource editor can't edit Electron 7's exe.
+
+Clients installed before the repository was renamed still check `krunker-kpal-client-RELEASE`, which GitHub redirects here. Never create a repository with that name, or those clients will stop updating.

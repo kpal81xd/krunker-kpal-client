@@ -6,12 +6,14 @@ Desktop client for [Krunker.io](https://krunker.io) with uncapped frame rate, ma
 
 ## Download
 
-- [Windows](https://github.com/kpal81xd/krunker-kpal-client/releases/download/v1.3.3/KPal-Client-Setup-1.3.3.exe)
-- [Mac](https://github.com/kpal81xd/krunker-kpal-client/releases/download/v1.3.3/KPal-Client-1.3.3.dmg)
-- [Linux (x32)](https://github.com/kpal81xd/krunker-kpal-client/releases/download/v1.3.3/KPal-Client-1.3.3-i386.AppImage)
-- [Linux (x64)](https://github.com/kpal81xd/krunker-kpal-client/releases/download/v1.3.3/KPal-Client-1.3.3.AppImage)
+Get the latest version from the [releases page](https://github.com/kpal81xd/krunker-kpal-client/releases/latest):
 
-All versions are on the [releases page](https://github.com/kpal81xd/krunker-kpal-client/releases).
+| System         | File                                    |
+| -------------- | --------------------------------------- |
+| Windows        | `KPal-Client-Setup-<version>.exe`       |
+| Mac            | `KPal-Client-<version>-mac.dmg`         |
+| Linux (64-bit) | `KPal-Client-<version>-x86_64.AppImage` |
+| Linux (32-bit) | `KPal-Client-<version>-i386.AppImage`   |
 
 The Windows and Linux versions update themselves when you launch them. On Mac, download the new version from the releases page yourself.
 
