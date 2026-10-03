@@ -1,0 +1,143 @@
+{
+    "compilerOptions": {
+        /* Type Checking */
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "alwaysStrict": true,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictBuiltinIteratorReturn": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "useUnknownInCatchVariables": true,
+
+        /* Modules */
+        "allowArbitraryExtensions": true,
+        "allowImportingTsExtensions": false,
+        "allowUmdGlobalAccess": false,
+        // "baseUrl",
+        // "customConditions",
+        "module": "Preserve",
+        // "moduleResolution",
+        // "moduleSuffixes",
+        "noResolve": false,
+        "noUncheckedSideEffectImports": true,
+        // "paths",
+        "resolveJsonModule": true,
+        "resolvePackageJsonExports": true,
+        "resolvePackageJsonImports": true,
+        // "rootDir",
+        // "rootDirs",
+        // "typeRoots",
+        "types": ["*"],
+
+        /* Emit */
+        // "declaration",
+        // "declarationDir",
+        // "declarationMap",
+        // "downlevelIteration",
+        // "emitBOM",
+        // "emitDeclarationOnly",
+        // "importHelpers",
+        // "inlineSourceMap",
+        // "inlineSources",
+        // "mapRoot",
+        // "newLine",
+        "noEmit": true,
+        // "noEmitHelpers",
+        // "noEmitOnError",
+        // "outDir",
+        // "outFile",
+        // "preserveConstEnums",
+        // "removeComments",
+        // "sourceMap",
+        // "sourceRoot",
+        // "stripInternal",
+
+        /* JavaScript Support */
+        "allowJs": true,
+        "checkJs": true,
+        // "maxNodeModuleJsDepth",
+
+        /* Editor Support */
+        // "disableSizeLimit",
+        // "plugins",
+
+        /* Interop Constraints */
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedDeclarations": false,
+        "isolatedModules": true,
+        "preserveSymlinks": false,
+        "verbatimModuleSyntax": true,
+
+        /* Backwards Compatibility */
+        // "charset",
+        // "importsNotUsedAsValues",
+        // "keyofStringsOnly",
+        // "noImplicitUseStrict",
+        // "noStrictGenericChecks",
+        // "out",
+        // "preserveValueImports",
+        // "suppressExcessPropertyErrors",
+        // "suppressImplicitAnyIndexErrors",
+
+        /* Language and Environment */
+        // "emitDecoratorMetadata",
+        // "experimentalDecorators",
+        // "jsx",
+        // "jsxFactory",
+        // "jsxFragmentFactory",
+        // "jsxImportSource",
+        "lib": ["ESNext"],
+        "moduleDetection": "force",
+        "noLib": false,
+        // "reactNamespace",
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+
+        /* Compiler Diagnostics */
+        // "diagnostics",
+        // "explainFiles",
+        // "extendedDiagnostics",
+        // "generateCpuProfile",
+        // "generateTrace",
+        // "listEmittedFiles",
+        // "listFiles",
+        // "noCheck",
+        // "traceResolution",
+
+        /* Projects */
+        // "composite",
+        // "disableReferencedProjectLoad",
+        // "disableSolutionSearching",
+        // "disableSourceOfProjectReferenceRedirect",
+        // "incremental",
+        // "tsBuildInfoFile",
+
+        /* Output Formatting */
+        // "noErrorTruncation",
+        // "preserveWatchOutput",
+        "pretty": true,
+
+        /* Completeness */
+        // skipDefaultLibCheck,
+        "skipLibCheck": true
+
+        /* Watch Options */
+        // assumeChangesOnlyAffectDirectDependencies
+    },
+    "include": ["scripts", "eslint.config.*"]
+}
