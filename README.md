@@ -17,27 +17,6 @@ The Windows and Linux versions update themselves when you launch them. On Mac, d
 
 ## Features
 
-- Uncapped frame rate, or a frame rate cap of your choice
-- DX9 rendering mode, so streaming software can capture the window
-- Forced color profile
-- Match search with region, mode, map, type and player count filters, plus auto-search
-- Custom models: swap game assets for your own files
-- KPal theme: a dark red look for the game and client menus
-- Discord Rich Presence, so friends can see your match and join it
-
-## Keybinds
-
-| Key    | Action                                     |
-| ------ | ------------------------------------------ |
-| Tab    | Open or close the client menu (changeable) |
-| F3     | Search for a match using your filters      |
-| F4     | Join a new match                           |
-| F5     | Reload the page                            |
-| F11    | Toggle fullscreen                          |
-| Alt+F4 | Quit                                       |
-
-## Client menu
-
 Press Tab in game to open the client menu.
 
 | Setting          | What it does                                                                                     |
@@ -55,6 +34,19 @@ Press Tab in game to open the client menu.
 | Custom Models    | Swaps game assets for files in your models folder.                                               |
 
 Most settings apply after a restart. Use Reboot at the top of the menu to restart the client, or Reset All to go back to the defaults.
+
+The client also shows your match in Discord Rich Presence, so friends can see what you're playing and join you.
+
+## Keybinds
+
+| Key    | Action                                     |
+| ------ | ------------------------------------------ |
+| Tab    | Open or close the client menu (changeable) |
+| F3     | Search for a match using your filters      |
+| F4     | Join a new match                           |
+| F5     | Reload the page                            |
+| F11    | Toggle fullscreen                          |
+| Alt+F4 | Quit                                       |
 
 ## Custom models
 
