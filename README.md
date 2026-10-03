@@ -2,7 +2,7 @@
 
 <img src="./.github/logo.png" alt="logo" width="200"/>
 
-Desktop client for [Krunker.io](https://krunker.io) with uncapped frame rate, matchmaking filters, asset swapping and Discord Rich Presence.
+Desktop client for [Krunker.io](https://krunker.io) with uncapped frame rate, matchmaking filters, custom models and Discord Rich Presence.
 
 ## Download
 
@@ -11,73 +11,63 @@ Desktop client for [Krunker.io](https://krunker.io) with uncapped frame rate, ma
 - [Linux (x32)](https://github.com/kpal81xd/krunker-kpal-client/releases/download/v1.3.3/KPal-Client-1.3.3-i386.AppImage)
 - [Linux (x64)](https://github.com/kpal81xd/krunker-kpal-client/releases/download/v1.3.3/KPal-Client-1.3.3.AppImage)
 
-Windows and Linux (AppImage) builds update themselves on launch. Mac builds are unsigned and must be updated manually.
+All versions are on the [releases page](https://github.com/kpal81xd/krunker-kpal-client/releases).
+
+The Windows and Linux versions update themselves when you launch them. On Mac, download the new version from the releases page yourself.
 
 ## Features
 
-- Uncapped frame rate, or a custom frame rate cap
-- DX9 rendering mode for window capture
+- Uncapped frame rate, or a frame rate cap of your choice
+- DX9 rendering mode, so streaming software can capture the window
 - Forced color profile
-- Matchmaker search with region, mode, map, type and player count filters, plus auto-search
-- Custom models: replace game assets with files from a local folder
-- KPal theme for the game and client menus
-- Discord Rich Presence with join support
+- Match search with region, mode, map, type and player count filters, plus auto-search
+- Custom models: swap game assets for your own files
+- KPal theme: a dark red look for the game and client menus
+- Discord Rich Presence, so friends can see your match and join it
 
 ## Keybinds
 
-| Key    | Action                                |
-| ------ | ------------------------------------- |
-| Tab    | Toggle the client menu (configurable) |
-| F3     | Quick search using the matchmaker     |
-| F4     | Join a new match                      |
-| F5     | Reload the page                       |
-| F11    | Toggle fullscreen                     |
-| Alt+F4 | Quit                                  |
+| Key    | Action                                     |
+| ------ | ------------------------------------------ |
+| Tab    | Open or close the client menu (changeable) |
+| F3     | Search for a match using your filters      |
+| F4     | Join a new match                           |
+| F5     | Reload the page                            |
+| F11    | Toggle fullscreen                          |
+| Alt+F4 | Quit                                       |
 
-## Development
+## Client menu
 
-Requires [Bun](https://bun.sh).
+Press Tab in game to open the client menu.
 
-```sh
-bun install
-bun run dev        # build with source maps and launch with devtools
-bun run lint       # prettier, eslint and type checks
-bun run lint-fix   # apply prettier and eslint fixes
-bun run build      # bundle into out/
-bun run dist       # build installers into dist/
-bun run ship       # build and publish a GitHub release (needs GH_TOKEN)
-```
+| Setting          | What it does                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| URL              | The current game link. Click it to copy it.                                                      |
+| Key Bind         | The key that opens this menu. Type a key and click Set.                                          |
+| KPal Theme       | Turns on the dark red theme.                                                                     |
+| Frame Rate Limit | Limits the frame rate to your monitor's refresh rate. Leave it off for an uncapped frame rate.   |
+| Frame Rate Cap   | Caps the frame rate at a set value. 0 means no cap.                                              |
+| DX9 Rendering    | Uses DirectX 9 so streaming software can capture the window (Windows).                           |
+| Color Profile    | Forces a color profile, e.g. sRGB.                                                               |
+| Auto-Search      | Keeps searching until a match fits your filters, and searches again when a game is full or ends. |
+| Filters          | Region, mode, map and type to search for.                                                        |
+| Min/Max Players  | Player count range to search for.                                                                |
+| Custom Models    | Swaps game assets for files in your models folder.                                               |
 
-Electron is pinned to 7.0.0, which only ships x64 builds for macOS. On Apple Silicon, install [Rosetta](https://support.apple.com/en-us/102527) and run `npm_config_arch=x64 bun install` so the x64 Electron binary is downloaded.
+Most settings apply after a restart. Use Reboot at the top of the menu to restart the client, or Reset All to go back to the defaults.
 
-### Layout
+## Custom models
 
-```
-src/
-  main.ts            main process: windows, settings, updater, Discord, shortcuts
-  preload/game.ts    game window features, isolated from the krunker page
-  preload/menu.ts    client menu
-  preload/prompt.ts  replacement for window.prompt
-  preload/splash.ts  splash and update status
-static/              html, css and images copied into out/
-build/               app icons used by electron-builder
-```
+1. In the client menu, turn on Custom Models.
+2. Click Import and pick a folder, or type its path.
+3. Inside that folder, recreate the path of each Krunker asset you want to replace. For example, a file at `textures/example.png` in your folder replaces `https://assets.krunker.io/textures/example.png`.
+4. Click Reboot.
 
-`scripts/build.mts` bundles everything with esbuild, including runtime dependencies, so the packaged app ships no `node_modules`.
+## Known issues
 
-### Compatibility
+- The client runs on an older browser engine, and the current Krunker site may not load in it.
+- Mac builds are unsigned, so macOS blocks the app the first time you open it. Go to System Settings > Privacy & Security and click Open Anyway.
 
-Electron 7 runs Node 12.8 and Chromium 78, so the bundle targets those versions and any runtime dependency upgrade has to keep working on them. Renovate is set up to never bump Electron and to ask before bumping runtime dependencies.
+## Building from source
 
-Krunker's current site uses JavaScript syntax that Chromium 78 cannot parse, so the game itself may not load in this client.
-
-## Security
-
-- Every window runs with context isolation, without Node integration and without the `remote` module. Krunker's page cannot reach client code, and the client talks to it only through shared DOM attributes.
-- Navigation is limited to `https://krunker.io`. Other `http(s)` links open in the system browser, and Discord join requests are only accepted for `https` krunker game links.
-- Settings sent over IPC are checked against the known keys and types before they are saved.
-- Web security is turned off in the game window only while custom models or the KPal theme are enabled, because Chromium blocks the `https` to `file://` redirects those features rely on.
-
-## Releasing
-
-Releases are published to this repository's GitHub releases, which the auto-updater reads. Clients installed before the repository was renamed still check `krunker-kpal-client-RELEASE`, which GitHub redirects here. Never create a repository with that name, or those clients will stop updating.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
