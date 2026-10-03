@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Menu</title>
+	<link rel="stylesheet" type="text/css" href="../css/menu.css">
+</head>
+<body id="bodyBorder">
+	<div id="pageViewer">
+		<div id="header"></div>
+		<div id="page"></div>
+	</div>
+</body>
+	<script>
+		let glob;
+		if (typeof snapshotResult !== 'undefined') {
+			console.log("Menu using Snapshot");
+			snapshotResult.setGlobals(global, process, global, {}, console, require);
+			glob = snapshotResult.customRequire('./load.js');
+		} else {
+			console.log("Menu using Raw");
+			glob = require('../js/load.js');
+		}
+
+		glob.menu(
+			require('electron'),
+			new (require('electron-store'))(),
+			__dirname
+		)
+	</script>
+</html>

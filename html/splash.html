@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Splash</title>
+	<link rel="stylesheet" type="text/css" href="../css/splash.css">
+</head>
+<body>
+	<img id="logo" src="../img/logo_1.png"></img>
+	<a id="version"></a>
+	<a id="updateStatus"></a>
+</body>
+	<script>
+		const {ipcRenderer}= require('electron');
+		const info = require('../package.json');
+		const Store = require('electron-store');
+		const config = new Store();
+		[
+			{
+				hook: 'update-available',
+				event: _ => {
+					updateStatus.innerHTML = "Downloading Update";
+				}
+			},
+			{
+				hook: 'download-progress',
+				event: (e, t) => {
+					updateStatus.innerHTML = `Downloading ${text}%`;
+				}
+			},
+			{
+				hook: 'update-not-available',
+				event: _ => {
+					updateStatus.innerHTML = `Loading...`;
+				}
+			},
+			{
+				hook: 'error',
+				event: (e, t) => {
+					updateStatus.innerHTML = "Download Failed";
+	            alert(text);
+				}
+			},
+		].forEach(b => {
+			ipcRenderer.on(b.hook, b.event);
+		});
+
+		version.innerText = `v${info.version}`;
+
+		if (config.get("tools_theme", false)) {
+			logo.src = '../img/theme/img/logo_1.png';
+			updateStatus.style.color = '#a21dc3';
+			version.style.color = '#cc3636';
+		}
+	</script>
+</html>
